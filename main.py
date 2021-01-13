@@ -11,5 +11,5 @@ def formatTime(x):
 startTime = formatTime(currentTime)
 endTime = formatTime(beginTime)
 
-print(startTime)
-print(endTime)
+print(str(startTime))
+print(str(endTime))
