@@ -1,12 +1,15 @@
 import datetime
 from datetime import timedelta
 
-x = datetime.datetime.utcnow()
-print(x)
+minutes = 60
+currentTime = datetime.datetime.utcnow()
+beginTime = currentTime - timedelta(minutes = minutes)
 
-minutes_to_sub = 5
-x_new = x - timedelta(minutes = minutes_to_sub)
-print(x_new)
+def formatTime(x):
+    return x.isoformat(timespec='milliseconds') + 'Z'
 
-#format time
-#x = datetime.datetime.utcnow().isoformat(timespec='milliseconds')
+startTime = formatTime(currentTime)
+endTime = formatTime(beginTime)
+
+print(startTime)
+print(endTime)
