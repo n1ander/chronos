@@ -1,6 +1,7 @@
 import datetime
 import requests
 import timeit
+from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 minutes = 60
@@ -22,13 +23,14 @@ url = "https://httpbin.org/uuid"
 
 def fetch(session, url):
     with session.get(url) as response:
-        print(response.json()['uuid'])
+        print(response.json())
 
 def main():
     startTime = timeit.default_timer()
-    with requests.Session() as session:
-        for _ in range(100):
-            fetch(session, url)
+    with ThreadPoolExecutor(max_workers=10) as e:
+        with requests.Session() as session:
+            e.map(fetch, [session] * 100, [url] * 100)
+            e.shutdown(wait=True)
     print("\nCompleted Execution in: ", timeit.default_timer() - startTime)
 
 main()
